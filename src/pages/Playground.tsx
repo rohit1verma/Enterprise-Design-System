@@ -49,17 +49,24 @@ const Playground = () => {
     }
   };
 
+  // Actually update the accordion state when apply changes is clicked
   const applyAccordionChanges = () => {
-    // This would typically update the accordion in a real application
-    // For now we just display a toast or console log
     console.log('Applied accordion changes', { accordionType, accordionDefaultExpanded });
+    // Force re-render by recreating the accordion component
+    setAccordionKey(prev => prev + 1);
   };
 
+  // Actually update the tabs state when apply changes is clicked
   const applyTabChanges = () => {
-    // This would typically update the tabs in a real application
     console.log('Applied tab changes', { defaultTab, tabOrientation });
+    // Force re-render by recreating the tabs component
+    setTabsKey(prev => prev + 1);
   };
   
+  // Keys to force re-render of components when settings change
+  const [accordionKey, setAccordionKey] = useState(0);
+  const [tabsKey, setTabsKey] = useState(0);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -286,7 +293,7 @@ const Playground = () => {
               <h3 className="text-lg font-medium mb-6 self-start">Preview</h3>
               
               {selectedTab === "accordion" && (
-                <div className="w-full max-w-md">
+                <div className="w-full max-w-md" key={accordionKey}>
                   <Accordion type={accordionType} defaultExpanded={accordionDefaultExpanded}>
                     <AccordionItemWrapper id="item-1">
                       <AccordionTrigger>What is a design system?</AccordionTrigger>
@@ -354,9 +361,9 @@ const Playground = () => {
               )}
               
               {selectedTab === "tabs" && (
-                <div className="w-full max-w-xl">
-                  <Tabs defaultValue="overview">
-                    <TabsList>
+                <div className="w-full max-w-xl" key={tabsKey}>
+                  <Tabs defaultValue={defaultTab}>
+                    <TabsList className={tabOrientation === 'vertical' ? 'flex-col items-start' : ''}>
                       <TabsTrigger value="overview">Overview</TabsTrigger>
                       <TabsTrigger value="analytics">Analytics</TabsTrigger>
                       <TabsTrigger value="reports">Reports</TabsTrigger>

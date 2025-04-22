@@ -1,7 +1,15 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Home, Settings, User, LayoutDashboard, ChevronRight, Bell, BarChart } from 'lucide-react';
+import { 
+  Home, 
+  Settings, 
+  User, 
+  LayoutDashboard, 
+  ChevronRight, 
+  Bell, 
+  BarChart,
+  ArrowRight 
+} from 'lucide-react';
 
 import { ThemeProvider } from '../components/design-system/ThemeProvider';
 import { ThemeToggle } from '../components/design-system/ThemeToggle';
@@ -37,14 +45,12 @@ const Index = () => {
   const [selectedTab, setSelectedTab] = useState(tabFromUrl || "colors");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   
-  // Update URL when tab changes
   useEffect(() => {
     const newParams = new URLSearchParams(location.search);
     newParams.set('selectedTab', selectedTab);
     navigate({ search: newParams.toString() }, { replace: true });
   }, [selectedTab, navigate, location.search]);
   
-  // Update selected tab when URL changes
   useEffect(() => {
     if (tabFromUrl) {
       setSelectedTab(tabFromUrl);

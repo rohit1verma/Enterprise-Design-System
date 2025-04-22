@@ -23,12 +23,41 @@ const Playground = () => {
     "Design System", "Components", "React", "TypeScript", "Accessibility"
   ]);
   
+  // Form state for component controls
+  const [accordionType, setAccordionType] = useState<'single' | 'multiple'>('single');
+  const [accordionDefaultExpanded, setAccordionDefaultExpanded] = useState<string[]>(['item-1']);
+  const [tagSize, setTagSize] = useState<'sm' | 'md' | 'lg'>('md');
+  const [tagVariant, setTagVariant] = useState<string>('primary');
+  const [isRemovable, setIsRemovable] = useState(true);
+  const [newTagText, setNewTagText] = useState('');
+  const [tabOrientation, setTabOrientation] = useState('horizontal');
+  const [defaultTab, setDefaultTab] = useState('tab1');
+  
+  // Event handlers
   const removeTag = (index: number) => {
     setTags(tags.filter((_, i) => i !== index));
   };
 
   const handleTabChange = (tabValue: string) => {
     setSelectedTab(tabValue);
+  };
+  
+  const handleAddTag = () => {
+    if (newTagText.trim()) {
+      setTags([...tags, newTagText.trim()]);
+      setNewTagText('');
+    }
+  };
+
+  const applyAccordionChanges = () => {
+    // This would typically update the accordion in a real application
+    // For now we just display a toast or console log
+    console.log('Applied accordion changes', { accordionType, accordionDefaultExpanded });
+  };
+
+  const applyTabChanges = () => {
+    // This would typically update the tabs in a real application
+    console.log('Applied tab changes', { defaultTab, tabOrientation });
   };
   
   return (
@@ -90,23 +119,34 @@ const Playground = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Accordion Type</label>
-                    <select className="w-full p-2 border border-input rounded-md bg-background">
-                      <option>Single</option>
-                      <option>Multiple</option>
+                    <select 
+                      className="w-full p-2 border border-input rounded-md bg-background"
+                      value={accordionType}
+                      onChange={(e) => setAccordionType(e.target.value as 'single' | 'multiple')}
+                    >
+                      <option value="single">Single</option>
+                      <option value="multiple">Multiple</option>
                     </select>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-1">Default Expanded</label>
-                    <select className="w-full p-2 border border-input rounded-md bg-background">
-                      <option>None</option>
-                      <option>Item 1</option>
-                      <option>Item 2</option>
-                      <option>Item 3</option>
+                    <select 
+                      className="w-full p-2 border border-input rounded-md bg-background"
+                      value={accordionDefaultExpanded[0] || 'none'}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setAccordionDefaultExpanded(value === 'none' ? [] : [value]);
+                      }}
+                    >
+                      <option value="none">None</option>
+                      <option value="item-1">Item 1</option>
+                      <option value="item-2">Item 2</option>
+                      <option value="item-3">Item 3</option>
                     </select>
                   </div>
                   
-                  <Button className="w-full">Apply Changes</Button>
+                  <Button className="w-full" onClick={applyAccordionChanges}>Apply Changes</Button>
                 </div>
               )}
               
@@ -114,31 +154,45 @@ const Playground = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Tag Size</label>
-                    <select className="w-full p-2 border border-input rounded-md bg-background">
-                      <option>Small</option>
-                      <option>Medium</option>
-                      <option>Large</option>
+                    <select 
+                      className="w-full p-2 border border-input rounded-md bg-background"
+                      value={tagSize}
+                      onChange={(e) => setTagSize(e.target.value as 'sm' | 'md' | 'lg')}
+                    >
+                      <option value="sm">Small</option>
+                      <option value="md">Medium</option>
+                      <option value="lg">Large</option>
                     </select>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-1">Variant</label>
-                    <select className="w-full p-2 border border-input rounded-md bg-background">
-                      <option>Default</option>
-                      <option>Primary</option>
-                      <option>Secondary</option>
-                      <option>Tertiary</option>
-                      <option>Success</option>
-                      <option>Warning</option>
-                      <option>Error</option>
-                      <option>Info</option>
+                    <select 
+                      className="w-full p-2 border border-input rounded-md bg-background"
+                      value={tagVariant}
+                      onChange={(e) => setTagVariant(e.target.value)}
+                    >
+                      <option value="default">Default</option>
+                      <option value="primary">Primary</option>
+                      <option value="secondary">Secondary</option>
+                      <option value="tertiary">Tertiary</option>
+                      <option value="success">Success</option>
+                      <option value="warning">Warning</option>
+                      <option value="error">Error</option>
+                      <option value="info">Info</option>
                     </select>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-1">Removable</label>
                     <div className="flex items-center space-x-2">
-                      <input type="checkbox" id="removable" className="rounded border-input" />
+                      <input 
+                        type="checkbox" 
+                        id="removable" 
+                        className="rounded border-input"
+                        checked={isRemovable}
+                        onChange={(e) => setIsRemovable(e.target.checked)}
+                      />
                       <label htmlFor="removable">Enable removal</label>
                     </div>
                   </div>
@@ -146,8 +200,19 @@ const Playground = () => {
                   <div>
                     <label className="block text-sm font-medium mb-1">New Tag</label>
                     <div className="flex">
-                      <input type="text" className="flex-1 p-2 border border-input rounded-l-md bg-background" placeholder="Tag text" />
-                      <Button className="rounded-l-none">Add</Button>
+                      <input 
+                        type="text" 
+                        className="flex-1 p-2 border border-input rounded-l-md bg-background" 
+                        placeholder="Tag text"
+                        value={newTagText}
+                        onChange={(e) => setNewTagText(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            handleAddTag();
+                          }
+                        }}
+                      />
+                      <Button className="rounded-l-none" onClick={handleAddTag}>Add</Button>
                     </div>
                   </div>
                 </div>
@@ -157,22 +222,30 @@ const Playground = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Default Tab</label>
-                    <select className="w-full p-2 border border-input rounded-md bg-background">
-                      <option>Tab 1</option>
-                      <option>Tab 2</option>
-                      <option>Tab 3</option>
+                    <select 
+                      className="w-full p-2 border border-input rounded-md bg-background"
+                      value={defaultTab}
+                      onChange={(e) => setDefaultTab(e.target.value)}
+                    >
+                      <option value="tab1">Tab 1</option>
+                      <option value="tab2">Tab 2</option>
+                      <option value="tab3">Tab 3</option>
                     </select>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium mb-1">Orientation</label>
-                    <select className="w-full p-2 border border-input rounded-md bg-background">
-                      <option>Horizontal</option>
-                      <option>Vertical</option>
+                    <select 
+                      className="w-full p-2 border border-input rounded-md bg-background"
+                      value={tabOrientation}
+                      onChange={(e) => setTabOrientation(e.target.value)}
+                    >
+                      <option value="horizontal">Horizontal</option>
+                      <option value="vertical">Vertical</option>
                     </select>
                   </div>
                   
-                  <Button className="w-full">Apply Changes</Button>
+                  <Button className="w-full" onClick={applyTabChanges}>Apply Changes</Button>
                 </div>
               )}
             </div>
@@ -181,13 +254,27 @@ const Playground = () => {
               <h3 className="text-lg font-medium mb-4">Code</h3>
               <div className="bg-muted p-4 rounded-md font-mono text-sm overflow-x-auto">
                 {selectedTab === "accordion" && 
-                  `<Accordion type="single" defaultExpanded={["item-1"]}>\n  <AccordionItemWrapper id="item-1">\n    <AccordionTrigger>Title 1</AccordionTrigger>\n    <AccordionContent>Content 1</AccordionContent>\n  </AccordionItemWrapper>\n</Accordion>`
+                  `<Accordion type="${accordionType}" defaultExpanded={["${accordionDefaultExpanded[0] || ''}"]}>
+  <AccordionItemWrapper id="item-1">
+    <AccordionTrigger>Title 1</AccordionTrigger>
+    <AccordionContent>Content 1</AccordionContent>
+  </AccordionItemWrapper>
+</Accordion>`
                 }
                 {selectedTab === "tags" && 
-                  `<Tag variant="primary" size="md" removable>\n  Design System\n</Tag>`
+                  `<Tag variant="${tagVariant}" size="${tagSize}" ${isRemovable ? 'removable' : ''}>
+  ${newTagText || 'Design System'}
+</Tag>`
                 }
                 {selectedTab === "tabs" && 
-                  `<Tabs defaultValue="tab1">\n  <TabsList>\n    <TabsTrigger value="tab1">Tab 1</TabsTrigger>\n    <TabsTrigger value="tab2">Tab 2</TabsTrigger>\n  </TabsList>\n  <TabsContent value="tab1">Content 1</TabsContent>\n  <TabsContent value="tab2">Content 2</TabsContent>\n</Tabs>`
+                  `<Tabs defaultValue="${defaultTab}">
+  <TabsList>
+    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">Content 1</TabsContent>
+  <TabsContent value="tab2">Content 2</TabsContent>
+</Tabs>`
                 }
               </div>
             </div>
@@ -200,7 +287,7 @@ const Playground = () => {
               
               {selectedTab === "accordion" && (
                 <div className="w-full max-w-md">
-                  <Accordion type="single" defaultExpanded={["item-1"]}>
+                  <Accordion type={accordionType} defaultExpanded={accordionDefaultExpanded}>
                     <AccordionItemWrapper id="item-1">
                       <AccordionTrigger>What is a design system?</AccordionTrigger>
                       <AccordionContent>
@@ -231,9 +318,10 @@ const Playground = () => {
                     {tags.map((tag, index) => (
                       <Tag 
                         key={index} 
-                        variant={['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error'][index % 7] as any} 
-                        removable 
+                        variant={(index < 7 ? ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error'][index % 7] : 'default') as any} 
+                        removable={isRemovable} 
                         onRemove={() => removeTag(index)}
+                        size={tagSize}
                       >
                         {tag}
                       </Tag>
@@ -243,23 +331,23 @@ const Playground = () => {
                   <div className="space-y-4">
                     <h4 className="font-medium">Tag Variants</h4>
                     <div className="flex flex-wrap gap-2">
-                      <Tag variant="default">Default</Tag>
-                      <Tag variant="primary">Primary</Tag>
-                      <Tag variant="secondary">Secondary</Tag>
-                      <Tag variant="tertiary">Tertiary</Tag>
-                      <Tag variant="success">Success</Tag>
-                      <Tag variant="warning">Warning</Tag>
-                      <Tag variant="error">Error</Tag>
-                      <Tag variant="info">Info</Tag>
+                      <Tag variant="default" size={tagSize}>Default</Tag>
+                      <Tag variant="primary" size={tagSize}>Primary</Tag>
+                      <Tag variant="secondary" size={tagSize}>Secondary</Tag>
+                      <Tag variant="tertiary" size={tagSize}>Tertiary</Tag>
+                      <Tag variant="success" size={tagSize}>Success</Tag>
+                      <Tag variant="warning" size={tagSize}>Warning</Tag>
+                      <Tag variant="error" size={tagSize}>Error</Tag>
+                      <Tag variant="info" size={tagSize}>Info</Tag>
                     </div>
                   </div>
                   
                   <div className="space-y-4">
                     <h4 className="font-medium">Tag Sizes</h4>
                     <div className="flex flex-wrap gap-2 items-center">
-                      <Tag size="sm" variant="primary">Small</Tag>
-                      <Tag size="md" variant="primary">Medium</Tag>
-                      <Tag size="lg" variant="primary">Large</Tag>
+                      <Tag size="sm" variant={tagVariant as any}>Small</Tag>
+                      <Tag size="md" variant={tagVariant as any}>Medium</Tag>
+                      <Tag size="lg" variant={tagVariant as any}>Large</Tag>
                     </div>
                   </div>
                 </div>

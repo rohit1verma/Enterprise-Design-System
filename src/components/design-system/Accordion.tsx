@@ -40,6 +40,9 @@ const AccordionContext = createContext<AccordionContextType>({
   type: 'single',
 });
 
+// Context for sharing the id between AccordionItem and its children
+const ItemIdContext = createContext<string>('');
+
 // === Components ===
 export function Accordion({
   children,
@@ -87,7 +90,7 @@ export function AccordionItem({ children, className, id }: AccordionItemProps) {
 
 export function AccordionTrigger({ children, className }: AccordionTriggerProps) {
   const { expanded, toggle } = useContext(AccordionContext);
-  const itemId = React.useContext(ItemIdContext);
+  const itemId = useContext(ItemIdContext);
   
   const isExpanded = expanded[itemId] || false;
 
@@ -117,7 +120,7 @@ export function AccordionTrigger({ children, className }: AccordionTriggerProps)
 
 export function AccordionContent({ children, className }: AccordionContentProps) {
   const { expanded } = useContext(AccordionContext);
-  const itemId = React.useContext(ItemIdContext);
+  const itemId = useContext(ItemIdContext);
   
   const isExpanded = expanded[itemId] || false;
 
@@ -136,9 +139,6 @@ export function AccordionContent({ children, className }: AccordionContentProps)
     </div>
   );
 }
-
-// Context for sharing the id between AccordionItem and its children
-const ItemIdContext = createContext('');
 
 export function AccordionItemWrapper({ children, id, ...props }: AccordionItemProps) {
   return (

@@ -88,14 +88,25 @@ export function Sidebar({
 }
 
 export function SidebarHeader({ children, className }: SidebarHeaderProps) {
+  const { collapsed } = useContext(SidebarContext);
+  
   return (
     <div
       className={cn(
         "flex h-14 items-center border-b border-border px-3 py-2",
+        collapsed ? "justify-center" : "justify-between",
         className
       )}
     >
       {children}
+      
+      {!collapsed && children && (
+        <SidebarTrigger className="ml-auto" />
+      )}
+      
+      {collapsed && !children && (
+        <SidebarTrigger />
+      )}
     </div>
   );
 }

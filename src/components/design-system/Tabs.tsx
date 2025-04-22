@@ -45,7 +45,9 @@ export function Tabs({ children, defaultValue, className, onChange }: TabsProps)
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    onChange?.(value);
+    if (onChange) {
+      onChange(value);
+    }
   };
 
   return (

@@ -26,6 +26,10 @@ const Playground = () => {
   const removeTag = (index: number) => {
     setTags(tags.filter((_, i) => i !== index));
   };
+
+  const handleTabChange = (tabValue: string) => {
+    setSelectedTab(tabValue);
+  };
   
   return (
     <div className="min-h-screen bg-background">
@@ -67,7 +71,7 @@ const Playground = () => {
         </p>
         
         <div className="mb-8">
-          <Tabs value={selectedTab} onValueChange={setSelectedTab}>
+          <Tabs defaultValue={selectedTab} onChange={handleTabChange}>
             <TabsList>
               <TabsTrigger value="accordion">Accordion</TabsTrigger>
               <TabsTrigger value="tags">Tags</TabsTrigger>

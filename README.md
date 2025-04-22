@@ -2,17 +2,11 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/c89feb2a-e843-45b1-8224-36bb8c4b7e03
+**URL**:https://enterprise-design-system-git-main-rohit1vermas-projects.vercel.app/
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/c89feb2a-e843-45b1-8224-36bb8c4b7e03) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
@@ -60,14 +54,57 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## 🌍 How to Deploy This Project on Vercel
 
-Simply open [Lovable](https://lovable.dev/projects/c89feb2a-e843-45b1-8224-36bb8c4b7e03) and click on Share -> Publish.
+Deploying this project on Vercel is simple and straightforward. Follow these steps:
 
-## Can I connect a custom domain to my Lovable project?
+### 1️⃣ **Prepare the Project**
+Ensure the project is ready for deployment:
+- Verify that the project has a `package.json` file with all dependencies listed.
+- Confirm that the `build` script is defined in `package.json`:
+  ```json
+  "scripts": {
+    "build": "vite build"
+  }
+  ```
+- Ensure the output directory is set to `dist` (default for Vite).
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### 2️⃣ **Push the Code to a Git Repository**
+- Push your project to a Git hosting service like GitHub, GitLab, or Bitbucket.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+
+### 3️⃣ **Connect to Vercel**
+1. Go to [Vercel](https://vercel.com/) and log in or create an account.
+2. Click on **"New Project"** and import your repository.
+3. Follow the prompts to configure the project.
+
+---
+
+### 4️⃣ **Configure Build Settings**
+Vercel will automatically detect the framework (Vite) and set the default build settings:
+- **Framework**: Vite
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+
+If these settings are not detected automatically, you can configure them manually in the Vercel dashboard.
+
+---
+
+### 5️⃣ **Deploy**
+- Click **"Deploy"**. Vercel will build and deploy your project.
+- Once deployed, you will receive a live URL for your project.
+
+---
+
+### 6️⃣ **Custom Domain (Optional)**
+To connect a custom domain:
+1. Navigate to **Settings > Domains** in your Vercel project dashboard.
+2. Add your custom domain and follow the instructions to configure DNS.
+3. Once verified, your project will be accessible via the custom domain.
+
+---
+
+Your project is now live on Vercel! 🎉

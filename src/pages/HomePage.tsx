@@ -34,25 +34,25 @@ const HomePage = () => {
                   <NavigationMenuTrigger>Components</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                      <Link to="/?selectedTab=accordion" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link to="/components?selectedTab=accordion" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                         <div className="text-sm font-medium leading-none">Accordion</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Vertically stacked sections of content that can be toggled.
                         </p>
                       </Link>
-                      <Link to="/?selectedTab=tags" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link to="/components?selectedTab=tags" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                         <div className="text-sm font-medium leading-none">Tags & Badges</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Compact elements for attributes, metadata, or categories.
                         </p>
                       </Link>
-                      <Link to="/?selectedTab=tabs" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link to="/components?selectedTab=tabs" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                         <div className="text-sm font-medium leading-none">Tabs</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Organize content into related groups for easier navigation.
                         </p>
                       </Link>
-                      <Link to="/?selectedTab=colors" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Link to="/components?selectedTab=colors" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                         <div className="text-sm font-medium leading-none">Color System</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Token-based color system with light and dark mode support.
@@ -96,7 +96,7 @@ const HomePage = () => {
             </p>
             <div className="flex flex-wrap justify-center gap-4 mt-8">
               <Button size="lg" asChild>
-                <Link to="/?selectedTab=colors">
+                <Link to="/components">
                   Explore Components <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -174,7 +174,7 @@ const HomePage = () => {
           
           <div className="mt-8 text-center">
             <Button variant="outline" asChild>
-              <Link to="/?selectedTab=colors">
+              <Link to="/components?selectedTab=colors">
                 View full color system
               </Link>
             </Button>
@@ -194,7 +194,7 @@ const HomePage = () => {
             </div>
             
             <div className="flex gap-8">
-              <Link to="/?selectedTab=colors" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link to="/components" className="text-muted-foreground hover:text-foreground transition-colors">
                 Components
               </Link>
               <Link to="/documentation" className="text-muted-foreground hover:text-foreground transition-colors">

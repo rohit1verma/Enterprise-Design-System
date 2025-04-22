@@ -1,5 +1,6 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Home, Settings, User, LayoutDashboard, ChevronRight, Bell, BarChart } from 'lucide-react';
 
 import { ThemeProvider } from '../components/design-system/ThemeProvider';
@@ -28,8 +29,27 @@ import {
 } from '../components/design-system/Sidebar';
 
 const Index = () => {
-  const [selectedTab, setSelectedTab] = useState("colors");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const tabFromUrl = queryParams.get('selectedTab');
+  
+  const [selectedTab, setSelectedTab] = useState(tabFromUrl || "colors");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  
+  // Update URL when tab changes
+  useEffect(() => {
+    const newParams = new URLSearchParams(location.search);
+    newParams.set('selectedTab', selectedTab);
+    navigate({ search: newParams.toString() }, { replace: true });
+  }, [selectedTab, navigate, location.search]);
+  
+  // Update selected tab when URL changes
+  useEffect(() => {
+    if (tabFromUrl) {
+      setSelectedTab(tabFromUrl);
+    }
+  }, [tabFromUrl]);
   
   return (
     <ThemeProvider>
@@ -80,13 +100,15 @@ const Index = () => {
               <SidebarGroup label="Settings">
                 <SidebarItem 
                   icon={<User size={16} />}
+                  onClick={() => navigate('/documentation#accessibility')}
                 >
-                  Account
+                  Accessibility
                 </SidebarItem>
                 <SidebarItem 
                   icon={<Settings size={16} />}
+                  onClick={() => navigate('/documentation#usage')}
                 >
-                  Preferences
+                  Usage Guidelines
                 </SidebarItem>
               </SidebarGroup>
             </SidebarContent>
@@ -134,6 +156,8 @@ const Index = () => {
 };
 
 const ColorTokensSection = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="space-y-6">
       <div>
@@ -192,6 +216,15 @@ const ColorTokensSection = () => {
           <ColorBox color="var(--color-neutral-900)" name="900" />
         </div>
       </div>
+      
+      <div className="mt-8">
+        <button 
+          onClick={() => navigate('/documentation#color-system')}
+          className="inline-flex items-center text-primary hover:underline"
+        >
+          View documentation <ArrowRight className="ml-1 h-4 w-4" />
+        </button>
+      </div>
     </div>
   );
 };
@@ -209,6 +242,8 @@ const ColorBox = ({ color, name }: { color: string, name: string }) => {
 };
 
 const AccordionSection = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="space-y-6">
       <div>
@@ -270,6 +305,15 @@ const AccordionSection = () => {
             </AccordionItemWrapper>
           </Accordion>
         </div>
+        
+        <div className="mt-8">
+          <button 
+            onClick={() => navigate('/documentation#accordion')}
+            className="inline-flex items-center text-primary hover:underline"
+          >
+            View documentation <ArrowRight className="ml-1 h-4 w-4" />
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -279,6 +323,7 @@ const TagsSection = () => {
   const [tags, setTags] = useState([
     "Design System", "Components", "React", "Accessibility"
   ]);
+  const navigate = useNavigate();
   
   const removeTag = (index: number) => {
     setTags(tags.filter((_, i) => i !== index));
@@ -332,12 +377,23 @@ const TagsSection = () => {
             ))}
           </div>
         </div>
+        
+        <div className="mt-8">
+          <button 
+            onClick={() => navigate('/documentation#tags')}
+            className="inline-flex items-center text-primary hover:underline"
+          >
+            View documentation <ArrowRight className="ml-1 h-4 w-4" />
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
 const TabsSection = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="space-y-6">
       <div>
@@ -386,6 +442,15 @@ const TabsSection = () => {
               </p>
             </TabsContent>
           </Tabs>
+        </div>
+        
+        <div className="mt-8">
+          <button 
+            onClick={() => navigate('/documentation#tabs')}
+            className="inline-flex items-center text-primary hover:underline"
+          >
+            View documentation <ArrowRight className="ml-1 h-4 w-4" />
+          </button>
         </div>
       </div>
     </div>

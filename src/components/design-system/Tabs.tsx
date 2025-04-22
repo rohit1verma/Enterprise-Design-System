@@ -12,6 +12,7 @@ interface TabsProps {
   children: React.ReactNode;
   defaultValue: string;
   className?: string;
+  orientation?: "horizontal" | "vertical";
   onChange?: (id: string) => void;
 }
 
@@ -40,7 +41,7 @@ const TabsContext = createContext<TabsContextType>({
 });
 
 // === Components ===
-export function Tabs({ children, defaultValue, className, onChange }: TabsProps) {
+export function Tabs({ children, defaultValue, className, orientation = "horizontal", onChange }: TabsProps) {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
   const handleTabChange = (value: string) => {
@@ -52,7 +53,10 @@ export function Tabs({ children, defaultValue, className, onChange }: TabsProps)
 
   return (
     <TabsContext.Provider value={{ activeTab, setActiveTab: handleTabChange }}>
-      <div className={cn("", className)} data-orientation="horizontal">
+      <div 
+        className={cn("", className)} 
+        data-orientation={orientation}
+      >
         {children}
       </div>
     </TabsContext.Provider>

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { ThemeToggle } from '../components/design-system/ThemeToggle';
 import { Link } from 'react-router-dom';
@@ -362,7 +361,7 @@ const Playground = () => {
               
               {selectedTab === "tabs" && (
                 <div className="w-full max-w-xl" key={tabsKey}>
-                  <Tabs defaultValue={defaultTab}>
+                  <Tabs defaultValue={defaultTab} orientation={tabOrientation === 'vertical' ? 'vertical' : 'horizontal'}>
                     <TabsList className={tabOrientation === 'vertical' ? 'flex-col items-start' : ''}>
                       <TabsTrigger value="overview">Overview</TabsTrigger>
                       <TabsTrigger value="analytics">Analytics</TabsTrigger>

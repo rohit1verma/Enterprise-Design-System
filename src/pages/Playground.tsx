@@ -360,9 +360,12 @@ const Playground = () => {
               )}
               
               {selectedTab === "tabs" && (
-                <div className="w-full max-w-xl" key={tabsKey}>
-                  <Tabs defaultValue={defaultTab} orientation={tabOrientation === 'vertical' ? 'vertical' : 'horizontal'}>
-                    <TabsList className={tabOrientation === 'vertical' ? 'flex-col items-start' : ''}>
+                <div className={`w-full ${tabOrientation === 'vertical' ? 'max-w-full' : 'max-w-xl'}`} key={tabsKey}>
+                  <Tabs 
+                    defaultValue={defaultTab} 
+                    orientation={tabOrientation === 'vertical' ? 'vertical' : 'horizontal'}
+                  >
+                    <TabsList>
                       <TabsTrigger value="overview">Overview</TabsTrigger>
                       <TabsTrigger value="analytics">Analytics</TabsTrigger>
                       <TabsTrigger value="reports">Reports</TabsTrigger>

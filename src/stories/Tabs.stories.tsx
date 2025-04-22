@@ -18,6 +18,7 @@ type Story = StoryObj<typeof Tabs>;
 export const Default: Story = {
   args: {
     defaultValue: 'tab1',
+    orientation: 'horizontal',
   },
   render: (args) => (
     <div className="w-96">
@@ -46,6 +47,45 @@ export const Default: Story = {
           <h4 className="font-medium mb-2">Tab 3 Content</h4>
           <p className="text-muted-foreground">
             This is the content for Tab 3. Tabs help organize content and reduce clutter.
+          </p>
+        </TabsContent>
+      </Tabs>
+    </div>
+  ),
+};
+
+export const VerticalOrientation: Story = {
+  args: {
+    defaultValue: 'tab1',
+    orientation: 'vertical',
+  },
+  render: (args) => (
+    <div className="w-96">
+      <Tabs {...args}>
+        <TabsList>
+          <TabsTrigger value="tab1">Account</TabsTrigger>
+          <TabsTrigger value="tab2">Password</TabsTrigger>
+          <TabsTrigger value="tab3">Settings</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="tab1" className="p-4 border rounded-md">
+          <h4 className="font-medium mb-2">Account Settings</h4>
+          <p className="text-muted-foreground">
+            Manage your account details and preferences.
+          </p>
+        </TabsContent>
+        
+        <TabsContent value="tab2" className="p-4 border rounded-md">
+          <h4 className="font-medium mb-2">Password Settings</h4>
+          <p className="text-muted-foreground">
+            Change your password and security preferences.
+          </p>
+        </TabsContent>
+        
+        <TabsContent value="tab3" className="p-4 border rounded-md">
+          <h4 className="font-medium mb-2">System Settings</h4>
+          <p className="text-muted-foreground">
+            Manage system configuration and options.
           </p>
         </TabsContent>
       </Tabs>

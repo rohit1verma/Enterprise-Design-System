@@ -19,7 +19,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter basename='/Enterprise-Design-System'>
+        <BrowserRouter>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/components' element={<Index />} />
